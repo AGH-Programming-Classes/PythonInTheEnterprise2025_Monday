@@ -27,9 +27,15 @@ python -m venv venv
 source venv/bin/activate     # macOS/Linux
 ```
 
+### 2. Install the project to make it visible to Python
+```bash
+pip install -e .
+```
+Alternatively, you can temporarily point PYTHONPATH to src.
+
 ### 2. Run the application
 ```bash
-python -m src.hello_world_project.main
+python -m hello_world_project.main
 ```
 
 ## Running Tests
