@@ -23,7 +23,7 @@ class State:
         # todo
         return GameState.UNFINISHED
     def are_coordinates_valid(self, coordinates: typing.Tuple[int, int]):
-        return 0 < coordinates[0] < 3 and 0 < coordinates[1] < 3
+        return 0 <= coordinates[0] < 3 and 0 <= coordinates[1] < 3
     def at_coordinates(self, coordinates: typing.Tuple[int, int]):
         return self.board[coordinates[0]][coordinates[1]]
 
@@ -37,19 +37,18 @@ def print_state(state: State):
             print("Draw")
         case 4:
             print("Unfinished")
-    msg = "  a b c" + "\n".join(str(index+1) + " " + " ".join(row) for index,row in enumerate(state.board))
-    print(msg
-          )
+    msg = "  a b c\n" + "\n".join(str(index+1) + " " + " ".join(row) for index,row in enumerate(state.board))
+    print(msg)
 def ask_for_row():
     alphabet = ["1", "2", "3"]
     result = None
-    while len(result := input("Specify column")) != 1 or result not in alphabet:
+    while len(result := input("Specify row(1, 2 or 3): ")) != 1 or result not in alphabet:
         print("Need one character (1, 2 or 3)")
-    return ord(result) - 65
+    return ord(result) - 49
 def ask_for_column():
     alphabet = ["A", "B", "C"]
     result = None
-    while len(result := input("Specify column")) != 1 or result not in alphabet:
+    while len(result := input("Specify column(A, B or C): ")) != 1 or result not in alphabet:
         print("Need one character (A, B or C)")
     return ord(result) - 65
 def ask_for_coordinates():
