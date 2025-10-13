@@ -1,29 +1,30 @@
-# Hello World Project
-
-A starting template for your project, following a modern Python project structure.
+# Tic Tac Toe Project
+Tic Tac Toe project for the AGH PitE classes. Made by Kamil Krawiec and Adam Balski.
 
 ## Project Layout
 
 ```
-hello_world_project/
-├── src/hello_world_project/
-│   ├── main.py
-│   ├── utils.py
-│   ├── example_module.py
-│   └── __init__.py
-├── tests/
-│   └── test_example_module.py
+Tic Tac Toe project
+├── LICENSE
 ├── pyproject.toml
+├── README.md
 ├── requirements.txt
 ├── setup.cfg
-└── README.md
+├── src
+│   └── tic_tac_toe
+│       ├── __init__.py
+│       ├── main.py
+│       └── utils.py
+└── tests
+    ├── __init__.py
+    └── test_example_module.py
 ```
 
 ## Quick Start
 
 ### 1. Create and activate a virtual environment
 ```bash
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate     # macOS/Linux
 ```
 
@@ -35,7 +36,7 @@ Alternatively, you can temporarily point PYTHONPATH to src.
 
 ### 2. Run the application
 ```bash
-python -m hello_world_project.main
+python -m src.tic_tac_toe.main
 ```
 
 ## Running Tests
