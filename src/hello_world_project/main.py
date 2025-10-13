@@ -2,7 +2,7 @@ from hello_world_project.utils import greet_user
 from hello_world_project.example_module import add_numbers
 
 def main():
-    print("=== Hello World Project ===")
+    print("=== Planets movement project ===")
 
     name = input("Enter your name: ")
     greeting = greet_user(name)
