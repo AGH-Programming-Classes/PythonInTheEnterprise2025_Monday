@@ -1,6 +1,6 @@
 import unittest
-from hello_world_project.example_module import add_numbers
-from hello_world_project.utils import greet_user
+from src.hello_world_project.example_module import add_numbers
+from src.hello_world_project.utils import greet_user
 
 class TestHelloWorldProject(unittest.TestCase):
     def test_add_numbers(self):
