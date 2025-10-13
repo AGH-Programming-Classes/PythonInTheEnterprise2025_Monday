@@ -21,14 +21,12 @@
 requires = ["setuptools", "wheel"]
 
 [project]
-name = "hello_world_project"
+name = "magnetic_balls_project"
 version = "0.1.0"
-description = "Hello World project."
-authors = [{name = "Your Name"}]
+description = "Magnetic balls simulation project."
+authors = [{name = "SzeMrok"},{name = "Archaiu"}]
 readme = "README.md"
 requires-python = ">=3.9"
 
 # Runtime dependencies — packages your project needs to run.
-# For example:
-# dependencies = ["requests>=2.32.0", "pandas>=2.0.0"]
-dependencies = []
+dependencies = ["pygame==2.6.0", "pymunk==7.1.0"]
