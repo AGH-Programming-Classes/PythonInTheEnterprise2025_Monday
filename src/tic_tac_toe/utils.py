@@ -28,8 +28,18 @@ class State:
         return self.board[coordinates[0]][coordinates[1]]
 
 def print_state(state: State):
-    # todo
-    pass
+    match state.state():
+        case 1:
+            print("X won")
+        case 2:
+            print("O won")
+        case 3:
+            print("Draw")
+        case 4:
+            print("Unfinished")
+    msg = "  a b c" + "\n".join(str(index+1) + " " + " ".join(row) for index,row in enumerate(state.board))
+    print(msg
+          )
 def ask_for_row():
     alphabet = ["1", "2", "3"]
     result = None
