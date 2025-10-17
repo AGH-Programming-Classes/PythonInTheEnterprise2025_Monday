@@ -13,6 +13,8 @@ A simple Python project that allows you to simulate and interact with magnetic b
 magball/
 ├── src/magball_project/
 │   ├── main.py
+│   ├── ball.py
+│   ├── engine.py
 │   └── __init__.py
 ├── tests/
 │   └── test_magball.py
