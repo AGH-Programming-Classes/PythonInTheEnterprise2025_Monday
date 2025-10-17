@@ -33,15 +33,34 @@ class PhysicsEngine:
             ball_i = self.bodies[i]
             for j in range(i + 1, n):
                 ball_j = self.bodies[j]
-                ij_vector = pymunk.Vec2d(ball_j.position) - pymunk.Vec2d(ball_i.position)
+                ij_vector = ball_j.position - ball_i.position
                 dist_sq = ij_vector.get_length_sqrd()
                 if dist_sq == 0:
                     continue  # Avoid division by zero
                 
-                force_magnitude = self.k * (ball_i.shapes[0].charge * ball_j.shapes[0].charge) / dist_sq
+                shape_i = next(iter(ball_i.shapes))
+                shape_j = next(iter(ball_j.shapes))
+                charge_i = getattr(shape_i, 'charge', 0.0)
+                charge_j = getattr(shape_j, 'charge', 0.0)
+                
+                force_magnitude = self.k * (charge_i * charge_j) / dist_sq
                 direction = ij_vector.normalized()
                 force = direction * force_magnitude
-                ball_i.apply_force_at_world_point(force, ball_i.position)
-                ball_j.apply_force_at_world_point(-force, ball_j.position)
+                ball_i.apply_force_at_world_point(-force, ball_i.position)
+                ball_j.apply_force_at_world_point(force, ball_j.position)
         self.space.step(self.dt)
 
+# Get the current states of all balls for testing
+    def get_states(self):
+        ball_states = []
+        for body in self.bodies:
+            shape = next(iter(body.shapes))
+            ball_states.append((
+                float(body.position.x),
+                float(body.position.y),
+                float(body.velocity.x),
+                float(body.velocity.y),
+                getattr(shape, 'charge', 0.0),
+                getattr(shape, 'radius', 0.0)
+            ))
+        return ball_states
