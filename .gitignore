@@ -21,3 +21,5 @@ venv/
 # OS-specific hidden files
 .DS_Store
 Thumbs.db
+
+*.egg-info/

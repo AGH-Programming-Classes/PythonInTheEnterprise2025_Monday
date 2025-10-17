@@ -5,7 +5,7 @@ pygame.init()
 
 # dsSet up the game window
 screen = pygame.display.set_mode((400, 300))
-pygame.display.set_caption("Blondi symulation")
+pygame.display.set_caption("Magballs")
 
 # Game loop
 running = True

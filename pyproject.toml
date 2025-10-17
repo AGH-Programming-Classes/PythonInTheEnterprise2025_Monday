@@ -21,7 +21,7 @@
 requires = ["setuptools", "wheel"]
 
 [project]
-name = "magnetic_balls_project"
+name = "magball_project"
 version = "0.1.0"
 description = "Magnetic balls simulation project."
 authors = [{name = "SzeMrok"},{name = "Archaiu"}]
