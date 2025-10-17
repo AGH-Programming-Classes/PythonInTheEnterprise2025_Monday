@@ -1,4 +1,4 @@
-class ball:
+class Ball:
     def __init__(self, radius, x, y, xVel, yVel, charge, color, weight):
         self.radius = radius
         self.x = x
