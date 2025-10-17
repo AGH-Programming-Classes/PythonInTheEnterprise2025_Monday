@@ -42,7 +42,7 @@ Alternatively, you can temporarily point PYTHONPATH to src.
 ### 2. Run the application
 
 ```bash
-python -m magnball_project.main
+python -m magball_project.main
 ```
 
 ## Running Tests
