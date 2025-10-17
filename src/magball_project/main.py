@@ -3,8 +3,12 @@ from sys import exit
 
 pygame.init()
 
+#size of window
+screen_width = 1500
+screen_height = 800
+
 # dsSet up the game window
-screen = pygame.display.set_mode((400, 300))
+screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Magballs")
 
 
