@@ -7,7 +7,15 @@ pygame.init()
 screen = pygame.display.set_mode((400, 300))
 pygame.display.set_caption("Magballs")
 
-# Game loop
+
+#tab witch balls
+tab = []
+
+
+
+#TODO first object
+
+
 running = True
 while running:
     for event in pygame.event.get():
