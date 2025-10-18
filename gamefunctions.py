@@ -22,19 +22,22 @@ def print_board(board):
 def make_move(board, mark):
     move_done = False
     while (move_done == False):
-        #trzeba dołożyć żeby jak column jest złe to nie pytało o row
         try:
+            #getting valid row
             row = int(input("Enter row (1-3): ")) - 1
-            if row > 2 or row < 0:
+            while (row > 2 or row < 0):
                 print("Invalid row number! Please enter a number between 1 and 3.")
-                continue
+                row = int(input("Enter row (1-3): ")) - 1
+            #getting valid column
             col = int(input("Enter column (1-3): ")) - 1
-            if col > 2 or col < 0:
+            while (col > 2 or col < 0):
                 print("Invalid column number! Please enter a number between 1 and 3.")
-                continue
+                col = int(input("Enter column (1-3): ")) - 1
+        #error if NaN
         except ValueError:
             print("Invalid input! Please enter numbers only.")
             continue
+        #checking if empty
         if board[row][col] == ' ':
             board[row][col] = mark
             move_done = True
