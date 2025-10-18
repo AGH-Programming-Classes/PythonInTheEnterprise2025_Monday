@@ -21,3 +21,6 @@ venv/
 # OS-specific hidden files
 .DS_Store
 Thumbs.db
+
+keyfile
+keyfile.pub
