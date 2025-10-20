@@ -26,6 +26,21 @@ class State:
         return 0 <= coordinates[0] < 3 and 0 <= coordinates[1] < 3
     def at_coordinates(self, coordinates: typing.Tuple[int, int]):
         return self.board[coordinates[0]][coordinates[1]]
+    def check_if_win(self):
+        if any(len(set(row)) == 1 for row in self.board):
+            return True
+        
+        if len(set([self.board[i][i]] for i in range(3))) == 1 and self.board[0][0]!=" ":
+            return True
+
+        if len(set([self.board[i][2 - i]] for i in range(3))) == 1 and self.board[0][2]!=" ":
+            return True
+        
+        for col in range(3):
+            if self.board[0][col]==self.board[1][col]==self.board[2][col]:
+                return True
+
+        return False    
 
 def print_state(state: State):
     match state.state():
