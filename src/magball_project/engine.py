@@ -1,5 +1,7 @@
+import time
 import pygame
 import pymunk
+from functools import wraps
 
 from magball_project.ball import Ball
 
@@ -29,7 +31,8 @@ class PhysicsEngine:
         shape.charge = ball.charge  # Custom attribute for charge
         self.space.add(body, shape)
         self.bodies.append(body)
-        
+     
+    # Handling all forces in one frame    
     def timestep(self):
         n = len(self.bodies)
         
@@ -57,7 +60,7 @@ class PhysicsEngine:
                 ball_j.apply_force_at_world_point((force.x, force.y), ball_j.position)
         self.space.step(self.dt)
 
-# Get the current states of all balls for testing
+    # Get the current states of all balls for testing
     def get_states(self):
         ball_states = []
         for body in self.bodies:
@@ -71,3 +74,15 @@ class PhysicsEngine:
                 getattr(shape, 'radius', 0.0)
             ))
         return ball_states
+
+    # Decorator to automatically call timestep
+    def timestep_decorator(self, func):
+        last = {'t': time.time()}
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            now = time.time()
+            while now - last['t'] >= self.dt:
+                self.timestep()
+                last['t'] += self.dt
+            return func(*args, **kwargs)
+        return wrapper

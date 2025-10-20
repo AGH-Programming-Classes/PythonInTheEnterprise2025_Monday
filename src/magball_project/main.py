@@ -13,24 +13,16 @@ tab = create_balls_random()
 setWindow()
 
 
-
-#TODO first object
-
-
 running = True
-engine = PhysicsEngine(tab)  # Assuming you have a PhysicsEngine class to handle the physics
-TIME = time.time()
+engine = PhysicsEngine(tab)
 
+draw = engine.timestep_decorator(func=lambda: draw_frame(engine))
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
             exit()
-
-    if time.time() > TIME + 0.01:
-        engine.timestep()
-        TIME = time.time()
-    draw_frame(engine)
+    draw()
 
 
 # Quit Pygame
