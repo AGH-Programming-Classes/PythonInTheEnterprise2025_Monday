@@ -27,26 +27,29 @@ _SIMPLE_OPS = {
 _SIMPLE_FUNCS = {}
 _SIMPLE_CONSTS = {}
 
-def _eval(node, ops, funcs, consts):
+def _eval(node, ops, funcs, consts, last_result):
     if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
         return node.value
     if isinstance(node, ast.Num):
         return node.n
     if isinstance(node, ast.UnaryOp) and type(node.op) in ops:
-        return ops[type(node.op)](_eval(node.operand, ops, funcs, consts))
+        return ops[type(node.op)](_eval(node.operand, ops, funcs, consts, last_result))
     if isinstance(node, ast.BinOp) and type(node.op) in ops:
-        return ops[type(node.op)](_eval(node.left, ops, funcs, consts), _eval(node.right, ops, funcs, consts))
+        return ops[type(node.op)](_eval(node.left, ops, funcs, consts, last_result), _eval(node.right, ops, funcs, consts, last_result))
     if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.keywords == []:
         fname = node.func.id
         if fname in funcs:
-            return funcs[fname](*[_eval(a, ops, funcs, consts) for a in node.args])
-    if isinstance(node, ast.Name) and node.id in consts:
-        return consts[node.id]
+            return funcs[fname](*[_eval(a, ops, funcs, consts, last_result) for a in node.args])
+    if isinstance(node, ast.Name):
+        if node.id in consts:
+            return consts[node.id]
+        if node.id == "ans":
+            return last_result
     raise ValueError("invalid expression")
 
-def calculate(expr, ops, funcs, consts):
+def calculate(expr, ops, funcs, consts, last_result):
     tree = ast.parse(expr, mode="eval")
-    return _eval(tree.body, ops, funcs, consts)
+    return _eval(tree.body, ops, funcs, consts, last_result)
 
 def main():
     mode = input("Choose calculator mode (simple/scientific): ").lower()
@@ -64,8 +67,15 @@ def main():
         current_funcs = _SCIENTIFIC_FUNCS
         current_consts = _SCIENTIFIC_CONSTS
 
+    last_result = 0
+
     if len(sys.argv) > 1:
-        print(calculate(" ".join(sys.argv[1:]), current_ops, current_funcs, current_consts))
+        try:
+            result = calculate(" ".join(sys.argv[1:]), current_ops, current_funcs, current_consts, last_result)
+            print(result)
+            last_result = result
+        except Exception as e:
+            print(f"Error: {e}")
         return
     while True:
         try:
@@ -74,7 +84,9 @@ def main():
                 break
             if not s:
                 continue
-            print(calculate(s, current_ops, current_funcs, current_consts))
+            result = calculate(s, current_ops, current_funcs, current_consts, last_result)
+            print(result)
+            last_result = result
         except Exception as e:
             print(f"Error: {e}")
 
