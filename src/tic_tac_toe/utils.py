@@ -1,5 +1,14 @@
 import enum
 import typing
+import random
+
+
+def ask_for_name(player_tag) -> str:
+    while True:
+        name=input(f"Enter name of {player_tag}:")
+
+        if name!="Bot":
+            return name
 import abc
 
 class Printer(abc.ABC):
@@ -109,7 +118,16 @@ def ask_for_coordinates():
     col = ask_for_column()
     return (row, col)
 def turn(state: State, p1_turn: bool):
-    coordinates = ask_for_coordinates()
+    if state.p2_name=="Bot" and p1_turn:
+        coordinates = ask_for_coordinates()
+    elif state.p2_name=="Bot" and not p1_turn:
+        while True:
+            coordinates=generate_random_position()
+            if state.board[coordinates[0]][coordinates[1]]==" ":
+                break
+    else:
+        coordinates = ask_for_coordinates()
+
     while (invalid := not state.are_coordinates_valid(coordinates)) or\
             (tile := state.at_coordinates(coordinates)) != ' ':
         if invalid:
@@ -119,5 +137,14 @@ def turn(state: State, p1_turn: bool):
         coordinates = ask_for_coordinates()
     tile = "X" if p1_turn else "O"
     state.board[coordinates[0]][coordinates[1]] = tile
+def ask_if_pvp():
+    valid = ["p","b"]
+    while True:
+        result = input("Chcesz zagrać na bota(B), czy z innym graczem?(P) ")
+        if result.lower() in valid:
+            return result
+
+def generate_random_position():
+    return (random.randint(0,2),random.randint(0,2))
 
 

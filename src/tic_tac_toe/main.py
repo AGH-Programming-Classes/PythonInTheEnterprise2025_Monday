@@ -1,4 +1,5 @@
-from src.tic_tac_toe.utils import ColoringPrinter, GameState, NormalPrinter, State, UnderlinedReverseVideoDecoratingPrinter, ask_for_name, get_printer, print_state, set_printer, turn
+from src.tic_tac_toe.utils import ColoringPrinter, GameState, NormalPrinter, State,\
+  UnderlinedReverseVideoDecoratingPrinter, ask_for_name, get_printer, print_state, set_printer, turn, ask_if_pvp
 
 
 def ask_boolean(question):
@@ -15,7 +16,13 @@ def ask_for_color():
 
 def main():
     print("=== Tic Tac Toe ===")
-
+    if ask_if_pvp()=="P":
+        name1 = ask_for_name("player #1")
+        name2 = ask_for_name("player #2")
+    else:
+        name1 = ask_for_name("player #1")
+        name2 = "Bot"
+    print(f"Starting game for {name1} and {name2}")
     color = ask_for_color()
     if color != None:
         set_printer(ColoringPrinter(color))
@@ -35,6 +42,7 @@ def main():
         p1_turn = not p1_turn
 
     print_state(state)
+
 
 if __name__ == "__main__":
     main()
