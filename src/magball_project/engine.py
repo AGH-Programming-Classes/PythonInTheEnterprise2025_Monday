@@ -5,12 +5,16 @@ from magball_project.ball import Ball
 
 
 class PhysicsEngine:
-    def __init__(self, dt: float = 1/60, k: float = 900):
+    def __init__(self, balls = [], dt: float = 1/60, k: float = 1000000):
         self.space = pymunk.Space()  
         self.space.gravity = (0, 0)  # No gravity for the top-down look
         self.dt = dt  # Timestep
         self.k = k  # Coulomb's constant equivalent
         self.bodies: list[pymunk.Body] = []  # List of bodies in the simulation
+        
+        # Dodaj wszystkie piłki do symulacji
+        for ball in balls:
+            self.add_ball(ball)
 
     def add_ball(self, ball: Ball):
         weight = ball.weight if ball.weight > 0 else 1.0  # Prevent zero weight
@@ -33,8 +37,11 @@ class PhysicsEngine:
             ball_i = self.bodies[i]
             for j in range(i + 1, n):
                 ball_j = self.bodies[j]
-                ij_vector = ball_j.position - ball_i.position
-                dist_sq = ij_vector.get_length_sqrd()
+                # Konwertuj pymunk Vec2d na nasze Pair
+                pos_i = ball_i.position
+                pos_j = ball_j.position
+                ij_vector = pymunk.Vec2d(pos_j.x - pos_i.x, pos_j.y - pos_i.y)
+                dist_sq = ij_vector.length_squared
                 if dist_sq == 0:
                     continue  # Avoid division by zero
                 
@@ -46,8 +53,8 @@ class PhysicsEngine:
                 force_magnitude = self.k * (charge_i * charge_j) / dist_sq
                 direction = ij_vector.normalized()
                 force = direction * force_magnitude
-                ball_i.apply_force_at_world_point(-force, ball_i.position)
-                ball_j.apply_force_at_world_point(force, ball_j.position)
+                ball_i.apply_force_at_world_point((-force.x, -force.y), ball_i.position)
+                ball_j.apply_force_at_world_point((force.x, force.y), ball_j.position)
         self.space.step(self.dt)
 
 # Get the current states of all balls for testing
