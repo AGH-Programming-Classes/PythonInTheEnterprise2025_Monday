@@ -3,6 +3,7 @@ from tic_tac_toe.board import Board
 class Gameplay:
     def __init__(self):
         self.board = Board()
+        self.activeplayer = "X"
     def boardStatus(self):
         count = 0
         for i in self.board.size:
@@ -36,3 +37,30 @@ class Gameplay:
         if self.boardStatus(self.board) == "full":
             if self.winCheck(self.board) == False:
                 draw = True
+            else:
+                win = True
+
+        if win==True:
+            return "WIN"
+        if draw == True:
+            return "DRAW"
+        else:
+            return "Continue"
+
+    def start(self):
+        while True:
+            self.board.draw_board_idx()
+            p=int(input(f"Player {self.activeplayer} enters"))
+            # chech if move legal
+            self.board.setCell(p, self.activeplayer)
+            if self.endgame() == "Continue":
+                self.activeplayer = "O" if self.activeplayer == "X" else "X"
+            else:
+                break
+        print("Game Over")
+        if self.endgame() == "DRAW":
+            print("Draw")
+        if self.endgame() == "WIN":
+            print(f"Winner is {self.activeplayer}")
+
+
