@@ -14,7 +14,7 @@ def create_starting_balls():
 
 def create_balls_random():
     output = []
-    number = random.randint(2, 10)
+    number = random.randint(2, 100)
     for i in range(number):
         radius = random.randint(5, 30)
         x = random.randint(place_of_board + radius, screen_width - place_of_board - radius)
