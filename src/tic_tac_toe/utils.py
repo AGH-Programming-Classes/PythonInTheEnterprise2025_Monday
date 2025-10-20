@@ -37,9 +37,8 @@ class State:
             return True
         
         for col in range(3):
-            if len(set([self.board[i][col]] for i in range(3))) == 1 and self.board[0][col]!=" ":
+            if self.board[0][col]==self.board[1][col]==self.board[2][col]:
                 return True
-
 
         return False    
 
