@@ -1,9 +1,43 @@
 import enum
 import typing
+import abc
+
+class Printer(abc.ABC):
+    @abc.abstractmethod
+    def print(self, msg, **kwargs):
+        pass
+class NormalPrinter(Printer):
+    def print(self, msg, **kwargs):
+        print(msg, **kwargs)
+class ColoringPrinter(Printer):
+    def __init__(self, color_code):
+        self.color_code = color_code
+    def print(self, msg, **kwargs):
+        kwargs_copy = dict(kwargs)
+        kwargs_copy["end"] = ""
+        print(f"\033[{30 + self.color_code}m", **kwargs_copy)
+        print(msg, **kwargs_copy)
+        print("\033[0m", **kwargs)
+class UnderlinedReverseVideoDecoratingPrinter(Printer):
+    def __init__(self, printer):
+        self.printer = printer
+    def print(self, msg, **kwargs):
+        kwargs_copy = dict(kwargs)
+        kwargs_copy["end"] = ""
+        print(f"\033[4;7m", **kwargs_copy)
+        self.printer.print(msg, **kwargs_copy)
+        print("\033[0m", **kwargs)
+
+printer = NormalPrinter()
+def get_printer():
+    return printer
+def set_printer(new_printer):
+    global printer
+    printer = new_printer
 
 
 def ask_for_name(player_tag) -> str:
-    return input(f"Enter name of {player_tag}:")
+    return input(f"Enter name of {player_tag}: ")
 
 class GameState(enum.Enum):
     PLAYER_1 = 1
@@ -49,26 +83,26 @@ class State:
 def print_state(state: State):
     match state.state():
         case GameState.PLAYER_1:
-            print("X won")
+            printer.print("X won")
         case GameState.PLAYER_2:
-            print("O won")
+            printer.print("O won")
         case GameState.DRAW:
-            print("Draw")
+            printer.print("Draw")
         case GameState.UNFINISHED:
-            print("Unfinished")
-    msg = "  a b c\n" + "\n".join(str(index+1) + " " + " ".join(row) for index,row in enumerate(state.board))
-    print(msg)
+            printer.print("Unfinished")
+    msg = "  A B C\n" + "\n".join(str(index+1) + " " + " ".join(row) for index,row in enumerate(state.board))
+    printer.print(msg)
 def ask_for_row():
     alphabet = ["1", "2", "3"]
     result = None
     while len(result := input("Specify row(1, 2 or 3): ")) != 1 or result not in alphabet:
-        print("Need one character (1, 2 or 3)")
+        printer.print("Need one character (1, 2 or 3)")
     return ord(result) - 49
 def ask_for_column():
     alphabet = ["A", "B", "C"]
     result = None
     while len(result := input("Specify column(A, B or C): ")) != 1 or result not in alphabet:
-        print("Need one character (A, B or C)")
+        printer.print("Need one character (A, B or C)")
     return ord(result) - 65
 def ask_for_coordinates():
     row = ask_for_row()
@@ -79,9 +113,9 @@ def turn(state: State, p1_turn: bool):
     while (invalid := not state.are_coordinates_valid(coordinates)) or\
             (tile := state.at_coordinates(coordinates)) != ' ':
         if invalid:
-            print("Invalid coordinates (out of board), asking again...")
+            printer.print("Invalid coordinates (out of board), asking again...")
         else:
-            print(f"Tile has been taken ('{tile}' sign has been placed)")
+            printer.print(f"Tile has been taken ('{tile}' sign has been placed)")
         coordinates = ask_for_coordinates()
     tile = "X" if p1_turn else "O"
     state.board[coordinates[0]][coordinates[1]] = tile
