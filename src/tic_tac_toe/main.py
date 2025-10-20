@@ -14,7 +14,7 @@ def main():
         turn(state, p1_turn)
         p1_turn = not p1_turn
 
-    print(f"Game has finished with state: {state.state()}")
+    print_state(state)
 
 if __name__ == "__main__":
     main()
