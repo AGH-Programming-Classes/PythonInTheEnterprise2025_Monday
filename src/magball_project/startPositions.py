@@ -4,7 +4,6 @@ from magball_project.graphics import screen_width, screen_height, place_of_board
 
 def create_starting_balls():
     balls = []
-    # start positions - zmniejszona odległość dla lepszego efektu
     ball1 = Ball(radius=15, x=place_of_board + 200, y=place_of_board + 200, xVel=0, yVel=0, charge=1, color=(255, 0, 0), weight=1)
     ball2 = Ball(radius=15, x=place_of_board + 500, y=place_of_board + 200, xVel=0, yVel=0, charge=-1, color=(0, 0, 255), weight=1.5)
     balls.append(ball1)
