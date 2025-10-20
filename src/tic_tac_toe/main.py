@@ -1,10 +1,15 @@
-from src.tic_tac_toe.utils import GameState, State, ask_for_name, print_state, turn
+from src.tic_tac_toe.utils import GameState, State, ask_for_name, print_state, turn,ask_if_pvp
 
 def main():
     print("=== Tic Tac Toe ===")
 
-    name1 = ask_for_name("player #1")
-    name2 = ask_for_name("player #2")
+
+    if ask_if_pvp()=="P":
+        name1 = ask_for_name("player #1")
+        name2 = ask_for_name("player #2")
+    else:
+        name1 = ask_for_name("player #1")
+        name2 = "Bot"
     print(f"Starting game for {name1} and {name2}")
 
     state = State.new(name1, name2)
@@ -15,6 +20,7 @@ def main():
         p1_turn = not p1_turn
 
     print_state(state)
+
 
 if __name__ == "__main__":
     main()
