@@ -11,6 +11,7 @@ pygame.init()
 setWindow()
 
 
+
 while True:
 
     #tab witch balls
@@ -23,6 +24,7 @@ while True:
 
     running = True
     engine = PhysicsEngine(tab)  # Assuming you have a PhysicsEngine class to handle the physics
+    draw = engine.timestep_decorator(func=lambda: draw_frame(engine))
     TIME = time.time()
 
     while running:
@@ -39,10 +41,7 @@ while True:
                 if event.key == pygame.K_r:
                     running = False
 
-        if time.time() > TIME + 0.01:
-            engine.timestep()
-            TIME = time.time()
-        draw_frame(engine)
+        draw()
 
 
 # Quit Pygame
