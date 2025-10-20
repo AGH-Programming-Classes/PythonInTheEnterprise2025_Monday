@@ -20,25 +20,47 @@ class State:
     def new(p1_name, p2_name):
         return State([[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]], p1_name, p2_name)
     def state(self) -> GameState:
-        # todo
+        if self.check_if_win()=="X":
+            return GameState.PLAYER_1
+        if self.check_if_win()=="O":
+            return GameState.PLAYER_2
+        if self.check_if_draw:
+            return GameState.DRAW
         return GameState.UNFINISHED
     def are_coordinates_valid(self, coordinates: typing.Tuple[int, int]):
         return 0 <= coordinates[0] < 3 and 0 <= coordinates[1] < 3
     def at_coordinates(self, coordinates: typing.Tuple[int, int]):
         return self.board[coordinates[0]][coordinates[1]]
+    def check_if_draw(self):
+        for row in self.board:
+            for p in row:
+                if p==" ":
+                    return False
+        return True
     def check_if_win(self):
-        if any(len(set(row)) == 1 for row in self.board):
-            return True
+        if any(len(set(row)) == 1 and row[0]=="X" for row in self.board):
+            return "X"
+        if any(len(set(row)) == 1 and row[0]=="O" for row in self.board):
+            return "O"
         
-        if len(set([self.board[i][i]] for i in range(3))) == 1 and self.board[0][0]!=" ":
-            return True
+        if len(set([self.board[i][i]] for i in range(3))) == 1 and self.board[0][0]=="X":
+            return "X"
+        
+        if len(set([self.board[i][i]] for i in range(3))) == 1 and self.board[0][0]=="O":
+            return "O"
 
-        if len(set([self.board[i][2 - i]] for i in range(3))) == 1 and self.board[0][2]!=" ":
-            return True
+        if len(set([self.board[i][2 - i]] for i in range(3))) == 1 and self.board[0][2]=="X":
+            return "X"
+        
+        if len(set([self.board[i][2 - i]] for i in range(3))) == 1 and self.board[0][2]=="O":
+            return "O"
         
         for col in range(3):
             if self.board[0][col]==self.board[1][col]==self.board[2][col]:
-                return True
+                if self.board[0][col]=="X":
+                    return "X"
+                else:
+                    return "O"
 
         return False    
 
