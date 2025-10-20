@@ -17,6 +17,9 @@ while True:
         print("O wins!")
         break
     ## Player X's turn
+    if not any(' ' in row for row in board):
+        print("It's a draw!")
+        break
     print("X's turn, make a move:")
     make_move(board, 'X')
     print_board(board)
@@ -24,8 +27,6 @@ while True:
         print("X wins!")
         break
     ## Check for draw (no more empty cells)
-    if not any(' ' in row for row in board):
-        print("It's a draw!")
-        break
+
 
 print("Thanks for playing!")
