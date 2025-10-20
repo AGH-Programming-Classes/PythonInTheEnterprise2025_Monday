@@ -1,19 +1,13 @@
 import pygame
 from sys import exit
+from magball_project.graphics import setWindow, draw_frame
 
 pygame.init()
 
-#size of window
-screen_width = 1500
-screen_height = 800
-
-# dsSet up the game window
-screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption("Magballs")
-
-
 #tab witch balls
 tab = []
+
+setWindow()
 
 
 
@@ -25,6 +19,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
+    
+    draw_frame()
+
 
 # Quit Pygame
 pygame.quit()
