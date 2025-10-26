@@ -14,9 +14,11 @@ def winning_move(board, mark):
 
 def print_board(board):
     i = 0
+    print( " 1   2   3")
     for row in board:
-        print(' | '.join(row))
-        if(i < 2): print('-' * 10)
+
+        print(str(i+1) + " " + ' | '.join(row))
+        if(i < 2): print( " " + '-' * 10)
         i += 1
 
 def make_move(board, mark):
@@ -51,5 +53,10 @@ def make_move(board, mark):
         if board[row][col] == ' ':
             board[row][col] = mark
             move_done = True
+            logger(f"Player {mark} placed his mark on row {row + 1}, column {col + 1}")
         else:
             print("Invalid move! There's already a mark in the specified position!")
+
+def logger(message):
+    with open("game_log.txt", "a") as log_file:
+        log_file.write(message + "\n")
