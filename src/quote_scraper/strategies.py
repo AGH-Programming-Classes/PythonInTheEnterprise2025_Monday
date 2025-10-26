@@ -1,4 +1,4 @@
-import json
+pakaimport json
 import csv
 from pathlib import Path
 from abc import ABC, abstractmethod
