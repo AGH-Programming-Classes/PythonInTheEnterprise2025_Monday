@@ -14,7 +14,7 @@ def fetch_page(url: str) -> Optional[str]:
     Returns the HTML text, or None if an error occurred.
     """
     headers = {
-        "User-Agent": "QuoteScraperBot/1.0 (+https://github.com/yourusername)"
+        "User-Agent": "QuoteScraperBot/1.0 (+https://github.com/thomaskarpinski)"
     }
 
     try:

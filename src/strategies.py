@@ -22,11 +22,10 @@ class SaveStrategy(ABC):
 
 
 class JsonSaveStrategy(SaveStrategy):
-    """Save quotes as a JSON file (UTF-8)."""
-
     def save(self, quotes: List[Quote], output_path: Path) -> None:
         data = [q.__dict__ for q in quotes]
         output_path.parent.mkdir(parents=True, exist_ok=True)
+        print(f"[DEBUG] Attempting to save file to: {output_path.resolve()}")
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
         print(f"[DONE] Saved {len(quotes)} quotes to {output_path} (JSON).")
