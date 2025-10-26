@@ -47,6 +47,24 @@ def make_move(board, mark):
         else:
             print("Invalid move! There's already a mark in the specified position!")
 
-def logger(message):
-    with open("game_log.txt", "a") as log_file:
-        log_file.write(message + "\n")
+#def logger(message):
+#    with open("game_log.txt", "a") as log_file:
+#        log_file.write(message + "\n")
+
+class Observer():
+    def update(self, message):
+        pass
+
+class Subject:
+    def __init__(self):
+        self.observers = []
+
+    def add (self, observer):
+        self.observers.append(observer)
+
+    def remove(self, observer):
+        self.observers.remove(observer)
+
+    def notify(self, message):
+        for observer in self.observers:
+            observer.update(message)
