@@ -25,18 +25,28 @@ def make_move(board, mark):
     move_done = False
     while (move_done == False):
         try:
+            # checking if user wants to exit
+            row = str(input("Enter row (1-3) or press q to exit: "))
+            if row == 'q':
+                print("Thanks for playing!")
+                exit()
+            col = str(input("Enter column (1-3) or press q to exit: "))
+            if col == 'q':
+                print("Thanks for playing!")
+                exit()
             #getting valid row
-            row = int(input("Enter row (1-3): ")) - 1
+            row = int(input("Enter row (1-3) or press q to exit: ")) - 1
             while (row > 2 or row < 0):
                 print("Invalid row number! Please enter a number between 1 and 3.")
-                row = int(input("Enter row (1-3): ")) - 1
+                row = int(input("Enter row (1-3) or press q to exit: ")) - 1
             #getting valid column
-            col = int(input("Enter column (1-3): ")) - 1
+            col = int(input("Enter column (1-3) or press q to exit: ")) - 1
             while (col > 2 or col < 0):
                 print("Invalid column number! Please enter a number between 1 and 3.")
-                col = int(input("Enter column (1-3): ")) - 1
+                col = int(input("Enter column (1-3) or press q to exit: ")) - 1
+
         #error if NaN
-        except ValueError:
+        except ValueError: 
             print("Invalid input! Please enter numbers only.")
             continue
         #checking if empty
