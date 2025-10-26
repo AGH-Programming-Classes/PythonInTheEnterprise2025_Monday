@@ -1,0 +1,90 @@
+{
+    "sun": {
+        "x" : 0,
+        "y" : 0,
+        "radius" : 30,
+        "color" : "YELLOW",
+        "mass" : 1.98892,
+        "mass_factor" : 30
+        },
+    "planets" : {
+        "mercury" : {
+            "x" : 0.387,
+            "y" : 0,
+            "radius" : 8,
+            "color" : "DARK_GREY",
+            "mass" : 3.3,
+            "mass_factor" : 23,
+            "vel_y" : 47400
+            },
+        "venus" : {
+            "x" : 0.723,
+            "y" : 0,
+            "radius" : 14,
+            "color" : "WHITE",
+            "mass" : 4.8685,
+            "mass_factor" : 24,
+            "vel_y" : -35020
+            },
+        "earth" : {
+            "x" : -1.0,
+            "y" : 0,
+            "radius" : 16,
+            "color" : "BLUE",
+            "mass" : 5.9742,
+            "mass_factor" : 24,
+            "vel_y" : 29783
+        },
+        
+        "mars" : {
+            "x" : -1.524,
+            "y" : 0,
+            "radius" : 12,
+            "color" : "RED",
+            "mass" : 0.639,
+            "mass_factor" : 23,
+            "vel_y" : 24077
+        },
+        "jupiter" : {
+            "x" : 5.203,
+            "y" : 0,
+            "radius" : 40,
+            "color" : "ORANGE",
+            "mass" : 1898,
+            "mass_factor" : 27,
+            "vel_y" : -13070
+        },
+
+        "saturn" : {
+            "x" : 9.537,
+            "y" : 0,
+            "radius" : 36,
+            "color" : "YELLOW",
+            "mass" : 568.3,
+            "mass_factor" : 26,
+            "vel_y" : -9690
+        },
+
+        "uranus" : {
+            "x" : 19.191,
+            "y" : 0,
+            "radius" : 28,
+            "color" : "LIGHT_BLUE",
+            "mass" : 86.81,
+            "mass_factor" : 25,
+            "vel_y" : -6810
+        },
+
+        "neptune" : {
+            "x" : 30.07,
+            "y" : 0,
+            "radius" : 28,
+            "color" : "DARK_BLUE",
+            "mass" : 102.4,
+            "mass_factor" : 26,
+            "vel_y" : -5430
+        }
+
+    }
+    
+}
