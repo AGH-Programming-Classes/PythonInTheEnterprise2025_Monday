@@ -1,9 +1,10 @@
 from tic_tac_toe.board import Board
 
 class Gameplay:
-    def __init__(self):
+    def __init__(self, player1, player2):
         self.board = Board()
-        self.activeplayer = "X"
+        self.players = [player1, player2]
+        self.activeplayer = 0
 
     def boardStatus(self):
         board_state = self.board.getBoardState()
@@ -46,23 +47,27 @@ class Gameplay:
             return "DRAW"
         else:
             return "Continue"
+    def nextPlayer(self):
+        self.activeplayer = self.activeplayer ^ 1
 
     def start(self):
         while True:
             self.board.draw()
-            p=int(input(f"Player {self.activeplayer} enters: "))
+            board_state = self.board.getBoardState()
+            symbol = self.players[self.activeplayer].getSymbol()
+            move = self.players[self.activeplayer].makeMove(board_state)
             # chech if move legal
-            self.board.setCell(p, self.activeplayer)
+            self.board.setCell(move, symbol)
             end = self.endgame()
             if end == "Continue":
-                self.activeplayer = "O" if self.activeplayer == "X" else "X"
+                self.nextPlayer()
             else:
                 self.board.draw()
                 print("Game Over")
                 if end == "DRAW":
                     print("Draw")
                 if end == "WIN":
-                    print(f"Winner is {self.activeplayer}")
+                    print(f"Winner is {symbol}")
                 break
 
 
