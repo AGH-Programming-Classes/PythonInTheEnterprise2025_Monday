@@ -23,31 +23,43 @@ def print_board(board):
 
 def make_move(board, mark):
     move_done = False
+    has_row = False
+    has_col = False
     while (move_done == False):
-        try:
-            # checking if user wants to exit
-            row_input = input("Enter row (1-3) or press q to exit: ").strip()
-            if row_input .lower()== 'q':
-                print("Thanks for playing!")
-                exit()
-            row = int(row_input) - 1
-            if row not in range(3):
-                print("Invalid row number! Please enter a number between 1 and 3.")
+        while (has_row == False):
+            try:
+                # checking if user wants to exit
+                row_input = input("Enter row (1-3) or press q to exit: ").strip()
+                if row_input .lower()== 'q':
+                    print("Thanks for playing!")
+                    exit()
+                row = int(row_input) - 1
+                if row not in range(3):
+                    print("Invalid row number! Please enter a number between 1 and 3.")
+                    continue
+                else:
+                    has_row = True
+            #error if NaN
+            except ValueError: 
+                print("Invalid input! Please enter numbers only.")
                 continue
-                
-            col_input = input("Enter column (1-3) or press q to exit: ").strip()
-            if col_input.lower() == 'q':
-                print("Thanks for playing!")
-                exit()
-            col = int(col_input) - 1
-            if row not in range(3):
-                print("Invalid row number! Please enter a number between 1 and 3.")
+        while (has_col == False):
+            try:              
+                col_input = input("Enter column (1-3) or press q to exit: ").strip()
+                if col_input.lower() == 'q':
+                    print("Thanks for playing!")
+                    exit()
+                col = int(col_input) - 1
+                if col not in range(3):
+                    print("Invalid col number! Please enter a number between 1 and 3.")
+                    continue
+                else:
+                    has_col = True
+            #error if NaN
+            except ValueError: 
+                print("Invalid input! Please enter numbers only.")
                 continue
-            
-        #error if NaN
-        except ValueError: 
-            print("Invalid input! Please enter numbers only.")
-            continue
+
         #checking if empty
         if board[row][col] == ' ':
             board[row][col] = mark
