@@ -8,6 +8,7 @@ New turn started
 Player O placed his mark on row 2, column 2
 New turn started
 Player O placed his mark on row 2, column 2
+
 Player X placed his mark on row 1, column 1
 Player O placed his mark on row 3, column 1
 Player X placed his mark on row 1, column 3
@@ -19,3 +20,4 @@ Player O placed his mark on row 2, column 1
 O has won the game
 New turn started
 Player O placed his mark on row 1, column 3
+

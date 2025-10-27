@@ -11,7 +11,6 @@ board = [
 logger("New turn started")
 print_board(board)
 while True:
-    #os.system('cls' if os.name == 'nt' else 'clear')
     
     ## Player O's turn
     print("O's turn, make a move:")
@@ -39,3 +38,19 @@ while True:
 
 
 print("Thanks for playing!")
+
+## version with class
+
+class Game:
+    def __init__(self):
+        self.board = [
+            [' ', ' ', ' '],
+            [' ', ' ', ' '],
+            [' ', ' ', ' ']
+        ]
+
+    def play(self):
+        print_board(self.board)
+        self.notify("start", {"message": "New game started"})
+        -
+        
