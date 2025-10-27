@@ -2,7 +2,7 @@ from tic_tac_toe.board import Board
 
 class Utils:
     
-    def boardStatus(board_state, board_size):
+    def boardStatus(self, board_state, board_size):
         count = 0
         for i in range(board_size):
             for j in range(board_size):
@@ -12,7 +12,7 @@ class Utils:
             return "full"
 
 
-    def winCheck(board_state, board_size):
+    def winCheck(self, board_state, board_size):
         win = False
         for i in range(board_size):
             # check rows
@@ -31,8 +31,10 @@ class Utils:
         return win
 
 
-    def endgame(win, status):
+    def endgame(self, board_state, board_size):
         draw = False
+        win = self.winCheck(board_state, board_size)
+        status = self.boardStatus(board_state, board_size)
         if status == "full":
             draw = True
         if win == True:

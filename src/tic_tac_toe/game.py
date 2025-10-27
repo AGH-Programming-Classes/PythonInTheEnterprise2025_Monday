@@ -27,11 +27,12 @@ class Gameplay:
         while True:
             self.board.draw()
             board_state = self.board.getBoardState()
+            size = self.board.size
             symbol = self.players[self.activeplayer].getSymbol()
             move = self.players[self.activeplayer].makeMove(board_state)
             if self.CheckMove(move):
                 self.board.setCell(move, symbol)
-                end = self.endgame()
+                end = Utils.endgame(board_state,size)
                 if end == "Continue":
                     self.nextPlayer()
                 else:
