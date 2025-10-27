@@ -29,8 +29,6 @@ def _assert_numeric_limits(x):
     return x
 
 def _safe_pow(a, b):
-    global _total_ops
-    _total_ops += 1
     if (isinstance(a, complex) or isinstance(b, complex)) and not _ALLOW_COMPLEX:
         raise ValueError("complex results are not supported")
     if isinstance(b, int):
@@ -43,22 +41,16 @@ def _safe_pow(a, b):
     return _assert_numeric_limits(r)
 
 def _safe_div(a, b):
-    global _total_ops
-    _total_ops += 1
     if b == 0:
         raise ZeroDivisionError("division by zero")
     return operator.truediv(a, b)
 
 def _safe_floordiv(a, b):
-    global _total_ops
-    _total_ops += 1
     if b == 0:
         raise ZeroDivisionError("division by zero")
     return operator.floordiv(a, b)
 
 def _safe_mod(a, b):
-    global _total_ops
-    _total_ops += 1
     if b == 0:
         raise ZeroDivisionError("modulo by zero")
     return operator.mod(a, b)
@@ -179,7 +171,6 @@ def main():
         try:
             result = calculate(" ".join(sys.argv[1:]), current_ops, current_funcs, current_consts, last_result)
             print(result)
-            _success_ops += 1
             last_result = result
         except Exception as e:
             print(_friendly_error(e))
