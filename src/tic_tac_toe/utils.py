@@ -60,9 +60,9 @@ class State:
         return State([[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]], p1_name, p2_name)
     def state(self) -> GameState:
         diags = [
-                {self.board[0][0], self.board[0][1], self.board[0][1]},
-                {self.board[1][0], self.board[1][1], self.board[1][1]},
-                {self.board[2][0], self.board[2][1], self.board[2][1]},
+                {self.board[0][0], self.board[0][1], self.board[0][2]},
+                {self.board[1][0], self.board[1][1], self.board[1][2]},
+                {self.board[2][0], self.board[2][1], self.board[2][2]},
 
                 {self.board[0][0], self.board[1][0], self.board[2][0]},
                 {self.board[0][1], self.board[1][1], self.board[2][1]},
@@ -113,34 +113,47 @@ def ask_for_coordinates():
     row = ask_for_row()
     col = ask_for_column()
     return (row, col)
-def turn(state: State, p1_turn: bool):
-    if state.p2_name=="Bot" and p1_turn:
-        coordinates = ask_for_coordinates()
-    elif state.p2_name=="Bot" and not p1_turn:
+
+class PlayingStrategy(abc.ABC):
+    @abc.abstractmethod
+    def ask_for_move(self,State):
+        pass
+
+class HumanStrategy(PlayingStrategy):
+    def ask_for_move(self,State):
+        row = ask_for_row()
+        col = ask_for_column()
+        return (row, col)
+
+class BotStrategy(PlayingStrategy):
+    def ask_for_move(self, State):
+        return (random.randint(0,2),random.randint(0,2))
+
+class Play:
+    def __init__(self,strategy: PlayingStrategy):
+        self.strategy = strategy
+    def play(self,state: State,p1_turn: bool):
         while True:
-            coordinates=generate_random_position()
+            coordinates = self.strategy.ask_for_move(state)
             if state.board[coordinates[0]][coordinates[1]]==" ":
                 break
-    else:
-        coordinates = ask_for_coordinates()
 
-    while (invalid := not state.are_coordinates_valid(coordinates)) or\
-            (tile := state.at_coordinates(coordinates)) != ' ':
-        if invalid:
-            printer.print("Invalid coordinates (out of board), asking again...")
-        else:
-            printer.print(f"Tile has been taken ('{tile}' sign has been placed)")
-        coordinates = ask_for_coordinates()
-    tile = "X" if p1_turn else "O"
-    state.board[coordinates[0]][coordinates[1]] = tile
+        while (invalid := not state.are_coordinates_valid(coordinates)) or\
+                (tile := state.at_coordinates(coordinates)) != ' ':
+            if invalid:
+                printer.print("Invalid coordinates (out of board), asking again...")
+            else:
+                printer.print(f"Tile has been taken ('{tile}' sign has been placed)")
+            coordinates = ask_for_coordinates()
+        tile = "X" if p1_turn else "O"
+        state.board[coordinates[0]][coordinates[1]] = tile
+            
+
 def ask_if_pvp():
     valid = ["p","b"]
     while True:
         result = input("Chcesz zagrać na bota(B), czy z innym graczem?(P) ")
         if result.lower() in valid:
             return result
-
-def generate_random_position():
-    return (random.randint(0,2),random.randint(0,2))
 
 
