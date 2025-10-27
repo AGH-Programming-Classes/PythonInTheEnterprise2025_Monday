@@ -67,19 +67,21 @@ class Gameplay:
             board_state = self.board.getBoardState()
             symbol = self.players[self.activeplayer].getSymbol()
             move = self.players[self.activeplayer].makeMove(board_state)
-            # chech if move legal
-            self.board.setCell(move, symbol)
-            end = self.endgame()
-            if end == "Continue":
-                self.nextPlayer()
+            if self.CheckMove(move):
+                self.board.setCell(move, symbol)
+                end = self.endgame()
+                if end == "Continue":
+                    self.nextPlayer()
+                else:
+                    self.board.draw()
+                    print("Game Over")
+                    if end == "DRAW":
+                        print("Draw")
+                    if end == "WIN":
+                        print(f"Winner is {symbol}")
+                    break
             else:
-                self.board.draw()
-                print("Game Over")
-                if end == "DRAW":
-                    print("Draw")
-                if end == "WIN":
-                    print(f"Winner is {symbol}")
-                break
+                print("Invalid move, try another number")
 
 
 
