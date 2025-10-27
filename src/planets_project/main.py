@@ -3,8 +3,9 @@ from src.planets_project.config import WIN
 from assets.fonts.colors_fonts import WHITE, FONT
 from src.planets_project.factory.planets_factory import make_solar_system
 from src.planets_project.renderer.camera import zoom_in, zoom_out
+from src.planets_project.error_handling.catch_errors import catch_errors
 
-
+@catch_errors()
 def main():
     run = True
     clock = pygame.time.Clock()

@@ -1,7 +1,9 @@
 from typing import Dict, Any, Iterable, Optional
 from src.planets_project.models.planet import Planet
 from assets.planets.default_planets import PRESETS, DEFAULT_ORDER
+from src.planets_project.error_handling.catch_errors import catch_errors
 
+@catch_errors()
 def planet_factory(kind: str, **overrides) -> Planet:
     """Create a single Planet from a named preset, with optional overrides."""
     key = kind.lower()
@@ -17,6 +19,7 @@ def planet_factory(kind: str, **overrides) -> Planet:
         p.sun = True
     return p
 
+@catch_errors()
 def make_solar_system(
     order: Optional[Iterable[str]] = None,
     per_body_overrides: Optional[Dict[str, Dict[str, Any]]] = None,

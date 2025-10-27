@@ -2,6 +2,7 @@ import pygame
 import math
 from src.planets_project.config import WIDTH, HEIGHT
 from assets.fonts.colors_fonts import WHITE, FONT
+from src.planets_project.error_handling.catch_errors import catch_errors
 
 class Planet:
     AU = 149.6e6 * 1000
@@ -24,6 +25,7 @@ class Planet:
         self.x_vel = 0
         self.y_vel = 0
 
+    @catch_errors()
     def draw(self, win):
         x = self.x * self.SCALE + WIDTH / 2
         y = self.y * self.SCALE + HEIGHT / 2
@@ -44,6 +46,7 @@ class Planet:
             name_text = FONT.render(self.name, True, WHITE)
             win.blit(name_text, (x - name_text.get_width() / 2, y - self.radius - 18))
 
+    @catch_errors()
     def attraction(self, other):
         other_x, other_y = other.x, other.y
         distance_x = other_x - self.x
@@ -59,6 +62,7 @@ class Planet:
         force_y = math.sin(theta) * force
         return force_x, force_y
 
+    @catch_errors()
     def update_position(self, planets):
         total_fx = total_fy = 0
         for planet in planets:

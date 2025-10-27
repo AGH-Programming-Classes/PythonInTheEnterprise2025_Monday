@@ -1,6 +1,8 @@
 import json
 import os
+from src.planets_project.error_handling.catch_errors import catch_errors
 
+@catch_errors()
 def read_config(directory: str = "../../../assets/config_files/", filename: str = "default.json") -> dict:
     filepath = os.path.join(directory, filename)
     
@@ -12,6 +14,7 @@ def read_config(directory: str = "../../../assets/config_files/", filename: str 
     
     return config
 
+@catch_errors()
 def write_config(config: dict, directory: str, filename: str = "config.json") -> None:
     os.makedirs(directory, exist_ok=True)  # Ensure the directory exists
     filepath = os.path.join(directory, filename)

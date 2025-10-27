@@ -1,6 +1,4 @@
 from src.planets_project.models.planet import Planet
-import math
-from src.planets_project.config import WIDTH, HEIGHT
 
 ZOOM_STEP = 1.1  # 10% zoom each time
 
