@@ -1,22 +1,48 @@
-# Hello World Project
-
-A starting template for your project, following a modern Python project structure.
-
 ## Project Layout
 
 ```
-hello_world_project/
-├── src/hello_world_project/
+PythonInTheEnterprise2025_Monday/
+├── src/planets_project/
+│   ├── __init__.py
+│   ├── __main__.py
+│   ├── app.py
+│   ├── config.py
 │   ├── main.py
-│   ├── utils.py
-│   ├── example_module.py
-│   └── __init__.py
+│   ├── event_handling/
+│   │   ├── __init__.py
+│   │   ├── event_bus.py
+│   │   └── events.py
+│   ├── factory/
+│   │   ├── __init__.py
+│   │   ├── planets_factory.py
+│   │   └── stars_factory.py
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── body.py
+│   │   ├── planet.py
+│   │   └── star.py
+│   ├── physics_engine/
+│   │   ├── __init__.py
+│   │   ├── forces.py
+│   │   └── integrators.py
+│   ├── renderer/
+│   │   ├── __init__.py
+│   │   └── renderer.py
+│   ├── sandbox_feature/
+│   │   ├── __init__.py
+│   │   └── sandbox.py
 ├── tests/
-│   └── test_example_module.py
-├── pyproject.toml
-├── requirements.txt
-├── setup.cfg
-└── README.md
+│   ├── __init__.py
+├── assets/
+│   ├── buttons/
+│   ├── fonts/
+│   │   └── colors_fonts.py
+│   ├── planets/
+│   ├── LICENSE
+│   ├── pyproject.toml
+│   ├── README.md
+│   ├── requirements.txt
+│   └── setup.cfg
 ```
 
 ## Quick Start
@@ -35,12 +61,4 @@ Alternatively, you can temporarily point PYTHONPATH to src.
 
 ### 2. Run the application
 ```bash
-python -m hello_world_project.main
-```
-
-## Running Tests
-
-Run all tests:
-```bash
-python -m unittest discover -s tests
-```
+python -m src.planets_project.main```
