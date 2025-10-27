@@ -7,6 +7,7 @@ from magball_project.startPositions import create_starting_balls, create_balls_r
 
 pygame.init()
 
+pygame.display.set_icon(pygame.image.load("src/magball_project/icon.png"))
 
 setWindow()
 
