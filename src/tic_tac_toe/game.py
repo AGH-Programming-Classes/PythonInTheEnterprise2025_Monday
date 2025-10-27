@@ -50,6 +50,17 @@ class Gameplay:
     def nextPlayer(self):
         self.activeplayer = self.activeplayer ^ 1
 
+    def CheckMove(self, move):
+        board_state = self.board.getBoardState()
+        i = (move - 1) // self.board.size
+        j = (move - 1) % self.board.size
+        if move < 1 or move > 9:
+            return False
+        if board_state[i][j] != " ":
+            return False
+        else:
+            return True
+
     def start(self):
         while True:
             self.board.draw()
