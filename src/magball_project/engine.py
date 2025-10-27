@@ -4,10 +4,11 @@ import pymunk
 from functools import wraps
 
 from magball_project.ball import Ball
+from magball_project.walls import Walls
 
 
 class PhysicsEngine:
-    def __init__(self, balls = [], dt: float = 1/60, k: float = 1000000):
+    def __init__(self, balls = [], dt: float = 1/60, k: float = 1000000, topLeft=(0, 0), bottomRight=(2000, 2000)):
         self.space = pymunk.Space()  
         self.space.gravity = (0, 0)  # No gravity for the top-down look
         self.dt = dt  # Timestep
@@ -18,6 +19,9 @@ class PhysicsEngine:
         for ball in balls:
             self.add_ball(ball)
 
+        self.collision_handler = Walls(topLeft, bottomRight)
+
+
     def add_ball(self, ball: Ball):
         weight = ball.weight if ball.weight > 0 else 1.0  # Prevent zero weight
         moment = pymunk.moment_for_circle(weight, 0, ball.radius)
@@ -26,9 +30,9 @@ class PhysicsEngine:
         body.velocity = ball.xVel, ball.yVel
         shape = pymunk.Circle(body, ball.radius)
         shape.color = pygame.Color(ball.color)
-        shape.elasticity = 0.9  # 0.9 instead of 1.0 as recommended
-        shape.friction = 0.0  # No friction for top-down
-        shape.charge = ball.charge  # Custom attribute for charge
+        shape.elasticity = 0.9  
+        shape.friction = 0.0 
+        shape.charge = ball.charge  
         self.space.add(body, shape)
         self.bodies.append(body)
      
@@ -40,7 +44,6 @@ class PhysicsEngine:
             ball_i = self.bodies[i]
             for j in range(i + 1, n):
                 ball_j = self.bodies[j]
-                # Konwertuj pymunk Vec2d na nasze Pair
                 pos_i = ball_i.position
                 pos_j = ball_j.position
                 ij_vector = pymunk.Vec2d(pos_j.x - pos_i.x, pos_j.y - pos_i.y)
@@ -59,6 +62,29 @@ class PhysicsEngine:
                 ball_i.apply_force_at_world_point((-force.x, -force.y), ball_i.position)
                 ball_j.apply_force_at_world_point((force.x, force.y), ball_j.position)
         self.space.step(self.dt)
+        
+        for i in range(n):
+            ball_i = self.bodies[i]
+            current_pos = ball_i.position
+            current_vel = ball_i.velocity
+            radius = next(iter(ball_i.shapes)).radius
+            
+            if self.collision_handler.checkIfCollision(current_pos.x, current_pos.y, radius):
+                prev_x = current_pos.x - current_vel.x * self.dt
+                prev_y = current_pos.y - current_vel.y * self.dt
+                
+                # Try undoing X movement only
+                if not self.collision_handler.checkIfCollision(prev_x, current_pos.y, radius):
+                    ball_i.position = (prev_x, current_pos.y)
+                    ball_i.velocity = (-current_vel.x * 0.8, current_vel.y)
+                # Try undoing Y movement only
+                elif not self.collision_handler.checkIfCollision(current_pos.x, prev_y, radius):
+                    ball_i.position = (current_pos.x, prev_y)
+                    ball_i.velocity = (current_vel.x, -current_vel.y * 0.8)
+                # Undo both movements
+                else:
+                    ball_i.position = (prev_x, prev_y)
+                    ball_i.velocity = (0, 0)
 
     # Get the current states of all balls for testing
     def get_states(self):

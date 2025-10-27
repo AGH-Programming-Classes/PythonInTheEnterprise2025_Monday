@@ -2,6 +2,8 @@ import random
 from magball_project.ball import Ball
 from magball_project.graphics import screen_width, screen_height, place_of_board
 
+NUMBER = 20
+
 def create_starting_balls():
     balls = []
     ball1 = Ball(radius=15, x=place_of_board + 200, y=place_of_board + 200, xVel=0, yVel=0, charge=1, color=(255, 0, 0), weight=1)
@@ -14,7 +16,7 @@ def create_starting_balls():
 
 def create_balls_random():
     output = []
-    number = random.randint(2, 100)
+    number = random.randint(2, NUMBER)
     for i in range(number):
         radius = random.randint(5, 30)
         x = random.randint(place_of_board + radius, screen_width - place_of_board - radius)
