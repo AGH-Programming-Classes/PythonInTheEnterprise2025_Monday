@@ -1,8 +1,8 @@
 import json
 import os
 
-def read_config(directory: str = "../../../assets/config_files/", filename: str = "default.json") -> dict:
-    filepath = os.path.join(directory, filename)
+def read_config(directory: str = "assets/config_files", filename: str = "default.json") -> dict:
+    filepath = os.path.join(os.path.dirname(__file__), "../../../", directory, filename)
     
     if not os.path.isfile(filepath):
         raise FileNotFoundError(f"Configuration file not found: {filepath}")

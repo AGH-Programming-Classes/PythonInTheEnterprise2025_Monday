@@ -9,7 +9,7 @@ class Planet:
     SCALE = 100 / AU  # 1AU = 100 pixels
     TIMESTEP = 3600 * 24  # 1 day
 
-    def __init__(self, x, y, radius, color, mass, name=""):
+    def __init__(self, x, y, radius, color, mass, name="", x_vel=0, y_vel=0):
         self.x = x
         self.y = y
         self.radius = radius

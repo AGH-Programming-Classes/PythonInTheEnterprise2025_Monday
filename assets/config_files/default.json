@@ -1,90 +1,95 @@
 {
     "sun": {
-        "x" : 0,
-        "y" : 0,
-        "radius" : 30,
-        "color" : "YELLOW",
-        "mass" : 1.98892,
-        "mass_factor" : 30
+        "name": "Sun",
+        "x": 0,
+        "y": 0,
+        "radius": 30,
+        "color": "LIGHT_YELLOW",
+        "mass": 1.98892e30,
+        "x_vel": 0,
+        "y_vel": 0,
+        "sun": true
+    },
+    "planets": {
+        "mercury": {
+            "name": "Mercury",
+            "x": 0.387,
+            "y": 0,
+            "radius": 8,
+            "color": "PINK",
+            "mass": 3.3e23,
+            "x_vel": 0,
+            "y_vel": -47.4e3
         },
-    "planets" : {
-        "mercury" : {
-            "x" : 0.387,
-            "y" : 0,
-            "radius" : 8,
-            "color" : "DARK_GREY",
-            "mass" : 3.3,
-            "mass_factor" : 23,
-            "vel_y" : 47400
-            },
-        "venus" : {
-            "x" : 0.723,
-            "y" : 0,
-            "radius" : 14,
-            "color" : "WHITE",
-            "mass" : 4.8685,
-            "mass_factor" : 24,
-            "vel_y" : -35020
-            },
-        "earth" : {
-            "x" : -1.0,
-            "y" : 0,
-            "radius" : 16,
-            "color" : "BLUE",
-            "mass" : 5.9742,
-            "mass_factor" : 24,
-            "vel_y" : 29783
+        "venus": {
+            "name": "Venus",
+            "x": 0.723,
+            "y": 0,
+            "radius": 14,
+            "color": "PURPLE",
+            "mass": 4.8685e24,
+            "x_vel": 0,
+            "y_vel": -35.02e3
         },
-        
-        "mars" : {
-            "x" : -1.524,
-            "y" : 0,
-            "radius" : 12,
-            "color" : "RED",
-            "mass" : 0.639,
-            "mass_factor" : 23,
-            "vel_y" : 24077
+        "earth": {
+            "name": "Earth",
+            "x": -1.0,
+            "y": 0,
+            "radius": 16,
+            "color": "GREEN",
+            "mass": 5.9742e24,
+            "x_vel": 0,
+            "y_vel": 29.783e3
         },
-        "jupiter" : {
-            "x" : 5.203,
-            "y" : 0,
-            "radius" : 40,
-            "color" : "ORANGE",
-            "mass" : 1898,
-            "mass_factor" : 27,
-            "vel_y" : -13070
+        "mars": {
+            "name": "Mars",
+            "x": -1.524,
+            "y": 0,
+            "radius": 12,
+            "color": "RED",
+            "mass": 6.39e23,
+            "x_vel": 0,
+            "y_vel": 24.077e3
         },
-
-        "saturn" : {
-            "x" : 9.537,
-            "y" : 0,
-            "radius" : 36,
-            "color" : "YELLOW",
-            "mass" : 568.3,
-            "mass_factor" : 26,
-            "vel_y" : -9690
+        "jupiter": {
+            "name": "Jupiter",
+            "x": 5.203,
+            "y": 0,
+            "radius": 40,
+            "color": "ORANGE",
+            "mass": 1.898e27,
+            "x_vel": 0,
+            "y_vel": -13.07e3
         },
-
-        "uranus" : {
-            "x" : 19.191,
-            "y" : 0,
-            "radius" : 28,
-            "color" : "LIGHT_BLUE",
-            "mass" : 86.81,
-            "mass_factor" : 25,
-            "vel_y" : -6810
+        "saturn": {
+            "name": "Saturn",
+            "x": 9.537,
+            "y": 0,
+            "radius": 36,
+            "color": "YELLOW",
+            "mass": 5.683e26,
+            "x_vel": 0,
+            "y_vel": -9.69e3
         },
-
-        "neptune" : {
-            "x" : 30.07,
-            "y" : 0,
-            "radius" : 28,
-            "color" : "DARK_BLUE",
-            "mass" : 102.4,
-            "mass_factor" : 26,
-            "vel_y" : -5430
+        "uranus": {
+            "name": "Uranus",
+            "x": 19.191,
+            "y": 0,
+            "radius": 28,
+            "color": "LIGHT_BLUE",
+            "mass": 8.681e25,
+            "x_vel": 0,
+            "y_vel": -6.81e3
+        },
+        "neptune": {
+            "name": "Neptune",
+            "x": 30.07,
+            "y": 0,
+            "radius": 28,
+            "color": "BLUE",
+            "mass": 1.024e26,
+            "x_vel": 0,
+            "y_vel": -5.43e3
         }
-
     }
-    
 }
