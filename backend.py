@@ -52,4 +52,6 @@ class Game:
     def play(self):
         print_board(self.board)
         self.notify("start", {"message": "New game started"})
-        -
+
+        
+
