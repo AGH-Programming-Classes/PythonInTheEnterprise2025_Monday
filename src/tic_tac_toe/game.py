@@ -44,7 +44,7 @@ class Gameplay:
                         print(f"Winner is {symbol}")
                     break
             else:
-                print("Invalid move, try another number")
+                print("Invalid move, try again")
 
 
 
