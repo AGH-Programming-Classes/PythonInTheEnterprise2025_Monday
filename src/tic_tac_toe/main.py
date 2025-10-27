@@ -30,8 +30,6 @@ def main():
     if rev_video:
         set_printer(UnderlinedReverseVideoDecoratingPrinter(get_printer()))
 
-    name1 = ask_for_name("player #1")
-    name2 = ask_for_name("player #2")
     get_printer().print(f"Starting game for {name1} and {name2}")
 
     state = State.new(name1, name2)

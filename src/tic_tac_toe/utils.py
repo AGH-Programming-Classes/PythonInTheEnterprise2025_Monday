@@ -44,10 +44,6 @@ def set_printer(new_printer):
     global printer
     printer = new_printer
 
-
-def ask_for_name(player_tag) -> str:
-    return input(f"Enter name of {player_tag}: ")
-
 class GameState(enum.Enum):
     PLAYER_1 = 1
     PLAYER_2 = 2
