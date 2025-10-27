@@ -1,3 +1,6 @@
+Jakub Jucha
+Alicja Jagielska
+
 # Hello World Project
 
 A starting template for your project, following a modern Python project structure.
