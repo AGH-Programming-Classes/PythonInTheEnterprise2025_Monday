@@ -1,0 +1,52 @@
+from src.planets_project.factory.planets_factory import Planet
+from assets.fonts.colors_fonts import LIGHT_YELLOW, PINK, PURPLE, GREEN, RED, ORANGE, YELLOW, LIGHT_BLUE, BLUE
+
+PRESETS = {
+    "sun": {
+        "name": "Sun",
+        "x": 0, "y": 0, "radius": 30, "color": LIGHT_YELLOW, "mass": 1.98892e30,
+        "x_vel": 0, "y_vel": 0, "sun": True,
+    },
+    "mercury": {
+        "name": "Mercury",
+        "x": 0.387 * Planet.AU, "y": 0, "radius": 8, "color": PINK, "mass": 3.30e23,
+        "x_vel": 0, "y_vel": -47.4e3,
+    },
+    "venus": {
+        "name": "Venus",
+        "x": 0.723 * Planet.AU, "y": 0, "radius": 14, "color": PURPLE, "mass": 4.8685e24,
+        "x_vel": 0, "y_vel": -35.02e3,
+    },
+    "earth": {
+        "name": "Earth",
+        "x": -1 * Planet.AU, "y": 0, "radius": 16, "color": GREEN, "mass": 5.9742e24,
+        "x_vel": 0, "y_vel": 29.783e3,
+    },
+    "mars": {
+        "name": "Mars",
+        "x": -1.524 * Planet.AU, "y": 0, "radius": 12, "color": RED, "mass": 6.39e23,
+        "x_vel": 0, "y_vel": 24.077e3,
+    },
+    "jupiter": {
+        "name": "Jupiter",
+        "x": 5.203 * Planet.AU, "y": 0, "radius": 40, "color": ORANGE, "mass": 1.898e27,
+        "x_vel": 0, "y_vel": -13.07e3,
+    },
+    "saturn": {
+        "name": "Saturn",
+        "x": 9.537 * Planet.AU, "y": 0, "radius": 36, "color": YELLOW, "mass": 5.683e26,
+        "x_vel": 0, "y_vel": -9.69e3,
+    },
+    "uranus": {
+        "name": "Uranus",
+        "x": 19.191 * Planet.AU, "y": 0, "radius": 28, "color": LIGHT_BLUE, "mass": 8.681e25,
+        "x_vel": 0, "y_vel": -6.81e3,
+    },
+    "neptune": {
+        "name": "Neptune",
+        "x": 30.07 * Planet.AU, "y": 0, "radius": 28, "color": BLUE, "mass": 1.024e26,
+        "x_vel": 0, "y_vel": -5.43e3,
+    },
+}
+
+DEFAULT_ORDER = ["sun", "mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune"]
