@@ -2,7 +2,7 @@ import time
 import pygame
 from sys import exit
 from magball_project.engine import PhysicsEngine
-from magball_project.graphics import setWindow, draw_frame, button_happens
+from magball_project.graphics import setWindow, draw_frame, button_happens, board_cords
 from magball_project.startPositions import create_starting_balls, create_balls_random
 
 pygame.init()
@@ -24,7 +24,8 @@ while True:
 
 
     running = True
-    engine = PhysicsEngine(tab)  # Assuming you have a PhysicsEngine class to handle the physics
+    coords = board_cords()
+    engine = PhysicsEngine(tab, topLeft=(coords[0], coords[1]), bottomRight=(coords[2], coords[3]))
     draw = engine.timestep_decorator(func=lambda: draw_frame(engine))
     TIME = time.time()
 

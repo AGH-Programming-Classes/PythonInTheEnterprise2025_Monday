@@ -23,7 +23,6 @@ class Pair:
     def __init__(self, a, b):
         self.a = a
         self.b = b
-        # Dodaj aliasy dla kompatybilności z pymunk Vec2d
         self.x = a
         self.y = b
     
