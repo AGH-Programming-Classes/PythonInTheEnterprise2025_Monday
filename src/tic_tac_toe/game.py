@@ -1,11 +1,12 @@
 from tic_tac_toe.board import Board
-from GameUtils import Utils
+from tic_tac_toe.GameUtils import Utils
 
 class Gameplay:
     def __init__(self, player1, player2):
         self.board = Board()
         self.players = [player1, player2]
         self.activeplayer = 0
+        self.utils = Utils()
 
     def nextPlayer(self):
         self.activeplayer = self.activeplayer ^ 1
@@ -32,7 +33,7 @@ class Gameplay:
             move = self.players[self.activeplayer].makeMove(board_state)
             if self.CheckMove(move):
                 self.board.setCell(move, symbol)
-                end = Utils.endgame(board_state,size)
+                end = self.utils.endgame(board_state, size)
                 if end == "Continue":
                     self.nextPlayer()
                 else:
