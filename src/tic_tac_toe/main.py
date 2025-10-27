@@ -1,5 +1,5 @@
-from src.tic_tac_toe.utils import ColoringPrinter, GameState, NormalPrinter, State,\
-  UnderlinedReverseVideoDecoratingPrinter, ask_for_name, get_printer, print_state, set_printer, turn, ask_if_pvp
+from src.tic_tac_toe.utils import PlayingStrategy, HumanStrategy, BotStrategy, Play,ColoringPrinter, GameState, NormalPrinter, State,\
+  UnderlinedReverseVideoDecoratingPrinter, ask_for_name, get_printer, print_state, set_printer, ask_if_pvp
 
 
 def ask_boolean(question):
@@ -35,8 +35,12 @@ def main():
     state = State.new(name1, name2)
     p1_turn = True
     while state.state() == GameState.UNFINISHED:
+        if name2 =="Bot" and not p1_turn:
+            play = Play(BotStrategy())
+        else:
+            play = Play(HumanStrategy())
         print_state(state)
-        turn(state, p1_turn)
+        play.play(state, p1_turn)
         p1_turn = not p1_turn
 
     print_state(state)
