@@ -18,3 +18,5 @@
 #   different purposes:
 #     * requirements.txt  → reproducibility (exact versions)
 #     * pyproject.toml → packaging & runtime dependencies
+
+pygame==2.1.3
