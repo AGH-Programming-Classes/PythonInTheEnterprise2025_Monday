@@ -80,9 +80,10 @@ _SIMPLE_FUNCS = {}
 _SIMPLE_CONSTS = {}
 
 _ALLOWED_AST_NODES = (
-    ast.Expression, ast.Constant, ast.Num,
+    ast.Expression, ast.Constant,
     ast.UnaryOp, ast.BinOp,
-    ast.Call, ast.Name, ast.Load
+    ast.Call, ast.Name, ast.Load,
+    ast.operator, ast.unaryop,
 )
 
 def _validate_ast(tree):
@@ -95,8 +96,6 @@ def _validate_ast(tree):
 def _eval(node, ops, funcs, consts, last_result):
     if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
         return _assert_numeric_limits(node.value)
-    if isinstance(node, ast.Num):
-        return _assert_numeric_limits(node.n)
     if isinstance(node, ast.UnaryOp) and type(node.op) in ops:
         v = _eval(node.operand, ops, funcs, consts, last_result)
         return _assert_numeric_limits(ops[type(node.op)](v))
@@ -109,7 +108,7 @@ def _eval(node, ops, funcs, consts, last_result):
         if fname in funcs:
             args = [_eval(a, ops, funcs, consts, last_result) for a in node.args]
             if fname == "factorial":
-                if not (len(args) == 1 and isinstance(args[0], int) and args[0] >= 0 and args[0] <= 100000):
+                if not (len(args) == 1 and isinstance(args[0], int) and 0 <= args[0] <= 100000):
                     raise OverflowError("factorial argument out of allowed range")
             r = funcs[fname](*args)
             return _assert_numeric_limits(r)
