@@ -115,8 +115,8 @@ def _eval(node, ops, funcs, consts, last_result):
         return r
     if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.keywords == []:
         fname = node.func.id
+        _total_ops += 1
         if fname in funcs:
-            _total_ops += 1
             args = [_eval(a, ops, funcs, consts, last_result) for a in node.args]
             if fname == "factorial":
                 if not (len(args) == 1 and isinstance(args[0], int) and 0 <= args[0] <= 100000):
@@ -124,20 +124,34 @@ def _eval(node, ops, funcs, consts, last_result):
             r = funcs[fname](*args)
             _success_ops += 1
             return _assert_numeric_limits(r)
+        raise ValueError("invalid expression")
     if isinstance(node, ast.Name):
         if node.id in consts:
             return _assert_numeric_limits(consts[node.id])
         if node.id == "ans":
             return _assert_numeric_limits(last_result)
+    if isinstance(node, (ast.UnaryOp, ast.BinOp, ast.Call)):
+        _total_ops += 1
     raise ValueError("invalid expression")
 
 def calculate(expr, ops, funcs, consts, last_result):
+    global _total_ops
     if not isinstance(expr, str) or not expr.strip():
+        _total_ops += 1
         raise ValueError("invalid expression")
     if len(expr) > _MAX_EXPR_LEN:
+        _total_ops += 1
         raise ValueError("expression too long")
-    tree = ast.parse(expr, mode="eval")
-    _validate_ast(tree)
+    try:
+        tree = ast.parse(expr, mode="eval")
+    except SyntaxError:
+        _total_ops += 1
+        raise ValueError("invalid expression")
+    try:
+        _validate_ast(tree)
+    except Exception as e:
+        _total_ops += 1
+        raise e
     return _eval(tree.body, ops, funcs, consts, last_result)
 
 def _friendly_error(e: Exception) -> str:
