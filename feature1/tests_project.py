@@ -7,6 +7,9 @@ _MAX_INT_EXP = 10_000
 _MAX_FLOAT_EXP = 1_000
 _ALLOW_COMPLEX = False
 
+_total_ops = 0
+_success_ops = 0
+
 def _ast_depth(node, d=0):
     return max([d] + [_ast_depth(c, d+1) for c in ast.iter_child_nodes(node)])
 
@@ -26,6 +29,8 @@ def _assert_numeric_limits(x):
     return x
 
 def _safe_pow(a, b):
+    global _total_ops
+    _total_ops += 1
     if (isinstance(a, complex) or isinstance(b, complex)) and not _ALLOW_COMPLEX:
         raise ValueError("complex results are not supported")
     if isinstance(b, int):
@@ -38,16 +43,22 @@ def _safe_pow(a, b):
     return _assert_numeric_limits(r)
 
 def _safe_div(a, b):
+    global _total_ops
+    _total_ops += 1
     if b == 0:
         raise ZeroDivisionError("division by zero")
     return operator.truediv(a, b)
 
 def _safe_floordiv(a, b):
+    global _total_ops
+    _total_ops += 1
     if b == 0:
         raise ZeroDivisionError("division by zero")
     return operator.floordiv(a, b)
 
 def _safe_mod(a, b):
+    global _total_ops
+    _total_ops += 1
     if b == 0:
         raise ZeroDivisionError("modulo by zero")
     return operator.mod(a, b)
@@ -94,23 +105,32 @@ def _validate_ast(tree):
         raise ValueError("expression too deep")
 
 def _eval(node, ops, funcs, consts, last_result):
+    global _success_ops, _total_ops
     if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
         return _assert_numeric_limits(node.value)
     if isinstance(node, ast.UnaryOp) and type(node.op) in ops:
+        _total_ops += 1
         v = _eval(node.operand, ops, funcs, consts, last_result)
-        return _assert_numeric_limits(ops[type(node.op)](v))
+        r = _assert_numeric_limits(ops[type(node.op)](v))
+        _success_ops += 1
+        return r
     if isinstance(node, ast.BinOp) and type(node.op) in ops:
+        _total_ops += 1
         l = _eval(node.left, ops, funcs, consts, last_result)
         r = _eval(node.right, ops, funcs, consts, last_result)
-        return _assert_numeric_limits(ops[type(node.op)](l, r))
+        r = _assert_numeric_limits(ops[type(node.op)](l, r))
+        _success_ops += 1
+        return r
     if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.keywords == []:
         fname = node.func.id
         if fname in funcs:
+            _total_ops += 1
             args = [_eval(a, ops, funcs, consts, last_result) for a in node.args]
             if fname == "factorial":
                 if not (len(args) == 1 and isinstance(args[0], int) and 0 <= args[0] <= 100000):
                     raise OverflowError("factorial argument out of allowed range")
             r = funcs[fname](*args)
+            _success_ops += 1
             return _assert_numeric_limits(r)
     if isinstance(node, ast.Name):
         if node.id in consts:
@@ -145,6 +165,7 @@ def _friendly_error(e: Exception) -> str:
     return f"Error: {e}"
 
 def main():
+    global _total_ops, _success_ops
     mode = input("Choose calculator mode (simple/scientific): ").lower()
     if mode == "simple":
         current_ops = _SIMPLE_OPS; current_funcs = _SIMPLE_FUNCS; current_consts = _SIMPLE_CONSTS
@@ -158,9 +179,11 @@ def main():
         try:
             result = calculate(" ".join(sys.argv[1:]), current_ops, current_funcs, current_consts, last_result)
             print(result)
+            _success_ops += 1
             last_result = result
         except Exception as e:
             print(_friendly_error(e))
+        print(f"Done {_success_ops} operations out of {_total_ops}.")
         return
     while True:
         try:
@@ -172,8 +195,10 @@ def main():
             result = calculate(s, current_ops, current_funcs, current_consts, last_result)
             print(result)
             last_result = result
+            print(f"Done {_success_ops} operations out of {_total_ops}.")
         except Exception as e:
             print(_friendly_error(e))
+            print(f"Done {_success_ops} operations out of {_total_ops}.")
 
 if __name__ == "__main__":
     main()
