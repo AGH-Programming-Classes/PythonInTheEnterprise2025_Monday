@@ -11,3 +11,14 @@ X has won the game!
 Game over.
 New game started
 The game was stopped by the user.
+New game started
+Player O placed his mark on row 1, column 1
+Player X placed his mark on row 2, column 2
+Player O placed his mark on row 3, column 3
+Player X placed his mark on row 2, column 1
+Player O placed his mark on row 1, column 3
+Player X placed his mark on row 2, column 3
+X has won the game!
+Game over.
+New game started
+The game was stopped by the user.

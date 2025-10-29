@@ -57,6 +57,12 @@ class Game:
         for observer in self.observers:
             observer.update(message)
 
+    def reset_board(self):
+        self.board = [
+            [' ', ' ', ' '],
+            [' ', ' ', ' '],
+            [' ', ' ', ' ']
+        ]
 
     def play(self):
         print_board(self.board)
@@ -149,4 +155,18 @@ game_logger = Logger()
 game_console = Console()
 game.add_observer(game_logger) 
 game.add_observer(game_console)
-game.play()
+while True:
+    game.play()
+    game.reset_board()
+    cont = input(("Do you want to play a new game? Press y for yes or n for no.").strip())
+    while (cont != 'n' and cont != 'y'):
+        print("Wrong character! Entry only n or y!")
+        print()
+        cont = input(("Press y for yes or n for no. ").strip())
+    if(cont == 'n'):
+        break
+    else:
+        continue
+    
+    
+
