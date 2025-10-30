@@ -1,3 +1,5 @@
+import random
+
 def winning_move(board, mark):
     # Checking rows, columns, and diagonals for a winning move
     for i in range(3):
@@ -73,7 +75,7 @@ def logger(message):
         log_file.write(message + "\n")
 
 class Observer():
-    def update(self, message):
+    def update(self, event, data):
         pass
 
 class Subject:
@@ -86,6 +88,36 @@ class Subject:
     def remove(self, observer):
         self.observers.remove(observer)
 
-    def notify(self, message):
+    def notify(self, event, data=None):
         for observer in self.observers:
-            observer.update(message)
+            observer.update(event, data)
+
+
+# base strategy interface
+class MoveStrategy:
+    def make_move(self, board, mark):
+        raise NotImplementedError("Each strategy must implement make_move()")
+    
+# asks user for input, game for two players
+class HumanMoveStrategy(MoveStrategy):
+    def make_move(self, board, mark):
+        make_move(board, mark)
+
+# one player - with computer, which picks empty cell randomly
+class ComputerMoveStrategy(MoveStrategy):
+    def make_move(self, board, mark):
+        # find empty cells
+        empty_cells = [(r, c) for r in range(3) for c in range(3) if board[r][c] == ' ']
+        if empty_cells:
+            row, col = random.choice(empty_cells)
+            board[row][col] = mark
+            print(f"Computer placed '{mark}' on row {row+1}, column {col+1}")
+            logger(f"Computer placed '{mark}' on row {row+1}, column {col+1}")
+
+class Player:
+    def __init__(self, mark, strategy: MoveStrategy):
+        self.mark = mark
+        self.strategy = strategy
+
+    def play(self, board):
+        self.strategy.make_move(board, self.mark)
