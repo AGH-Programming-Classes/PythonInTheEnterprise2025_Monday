@@ -23,60 +23,9 @@ def print_board(board):
         if(i < 2): print( " " + '-' * 10)
         i += 1
 
-def make_move(board, mark, subject):
-   move_done = False
-   has_row = False
-   has_col = False
-   while (move_done == False):
-       while (has_row == False):
-           try:
-               # checking if user wants to exit
-               row_input = input("Enter row (1-3) or press q to exit: ").strip()
-               if row_input .lower()== 'q':
-                   print("Thanks for playing!")
-                   exit()
-               row = int(row_input) - 1
-               if row not in range(3):
-                   print("Invalid row number! Please enter a number between 1 and 3.")
-                   continue
-               else:
-                   has_row = True
-           #error if NaN
-           except ValueError: 
-               print("Invalid input! Please enter numbers only.")
-               continue
-       while (has_col == False):
-           try:              
-               col_input = input("Enter column (1-3) or press q to exit: ").strip()
-               if col_input.lower() == 'q':
-                   print("Thanks for playing!")
-                   exit()
-               col = int(col_input) - 1
-               if col not in range(3):
-                   print("Invalid col number! Please enter a number between 1 and 3.")
-                   continue
-               else:
-                   has_col = True
-           #error if NaN
-           except ValueError: 
-               print("Invalid input! Please enter numbers only.")
-               continue
-
-       #checking if empty
-       if board[row][col] == ' ':
-           board[row][col] = mark
-           move_done = True
-           logger(f"Player {mark} placed his mark on row {row + 1}, column {col + 1}")
-       else:
-           print("Invalid move! There's already a mark in the specified position!")
-
-#def logger(message):
-#    with open("game_log.txt", "a") as log_file:
-#        log_file.write(message + "\n")
-
-class Observer():
-    def update(self, event, data):
-        pass
+class Observer:
+    def update(self, message):
+        raise NotImplementedError
 
 class Subject:
     def __init__(self):
@@ -100,3 +49,31 @@ class Logger(Observer):
 class Console(Observer):
     def update(self, message):
         print(message)
+
+# base strategy interface
+class MoveStrategy:
+    def make_move(self, game, mark):
+        raise NotImplementedError("Each strategy must implement make_move(game, mark) method.")
+    
+    
+# asks user for input, game for two players
+class HumanMoveStrategy(MoveStrategy):
+    def make_move(self, game, mark):
+        game.make_move(mark)
+
+# one player - with computer, which picks empty cell randomly
+class ComputerMoveStrategy(MoveStrategy):
+    def make_move(self, game, mark):
+        # find empty cells
+        empty_cells = [(r, c) for r in range(3) for c in range(3) if game.board[r][c] == ' ']
+        if empty_cells:
+            row, col = random.choice(empty_cells)
+            game.board[row][col] = mark
+            game.notify(f"Computer placed '{mark}' on row {row+1}, column {col+1}")
+class Player:
+    def __init__(self, mark, strategy: MoveStrategy):
+        self.mark = mark
+        self.strategy = strategy
+
+    def play(self, game):
+        self.strategy.make_move(game, self.mark)

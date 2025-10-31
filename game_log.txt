@@ -55,3 +55,11 @@ The game was stopped by the user.
 >>>>>>> 44a02603a624c7ef361688d0e2e4524a9093ffdb
 =======
 >>>>>>> parent of 44a0260 (infinity loop for game)
+New game started
+Player O placed his mark on row 1, column 1
+Player X placed his mark on row 2, column 2
+Player O placed his mark on row 1, column 2
+Player X placed his mark on row 2, column 1
+Player O placed his mark on row 1, column 3
+O has won the game!
+Game over.
