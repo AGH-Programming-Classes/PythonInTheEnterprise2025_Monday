@@ -88,7 +88,7 @@ class Subject:
     def remove(self, observer):
         self.observers.remove(observer)
 
-    def notify(self, event, data=None):
+    def notify(self, message):
         for observer in self.observers:
             observer.update(message)
 

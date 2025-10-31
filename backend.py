@@ -49,6 +49,23 @@ class Game(Subject):
             [' ', ' ', ' '],
             [' ', ' ', ' ']
         ]
+        self.observers = []
+
+    def add_observer(self, observer):
+        self.observers.append(observer)
+
+    def notify(self, message):
+        for observer in self.observers:
+            observer.update(message)
+    def reset_board(self):
+        self.board = [
+            [' ', ' ', ' '],
+            [' ', ' ', ' '],
+            [' ', ' ', ' ']
+        ]
+    self.playerO = Player('O', self)
+    self.playerX = Player('X', self)
+    <<<<<<< HEAD
         try:
             mode = input("Would you like to play against another person(1) or are you playing alone(2)?").strip()
             if mode == '1':
@@ -60,13 +77,14 @@ class Game(Subject):
         except ValueError:
             print("Invalid input! Please enter correct number.")
             
+=======
+>>>>>>> parent of 44a0260 (infinity loop for game)
     def play(self):
         print_board(self.board)
-        self.notify("start", {"message": "New game started"})
-
+        self.notify("New game started")
         while True:
             print("O's turn: ")
-            self.playerO.play(self.board)
+             self.playerO.play(self.board)
             os.system('cls' if os.name == 'nt' else 'clear')
             print_board(self.board)
             if winning_move(self.board, 'O'):
@@ -94,3 +112,79 @@ if __name__ == "__main__":
     game.play()
         
 
+<<<<<<< HEAD
+=======
+    def make_move(self, board, mark):
+        move_done = False
+        has_row = False
+        has_col = False
+        while (move_done == False):
+            while (has_row == False):
+                try:
+                    # checking if user wants to exit
+                    row_input = input("Enter row (1-3) or press q to exit: ").strip()
+                    if row_input .lower()== 'q':
+                        self.notify("The game was stopped by the user.")
+                        print("Thanks for playing!")
+                        exit()
+                    row = int(row_input) - 1
+                    if row not in range(3):
+                        print("Invalid row number! Please enter a number between 1 and 3.")
+                        continue
+                    else:
+                        has_row = True
+                #error if NaN
+                except ValueError: 
+                    print("Invalid input! Please enter numbers only.")
+                    continue
+            while (has_col == False):
+                try:              
+                    col_input = input("Enter column (1-3) or press q to exit: ").strip()
+                    if col_input.lower() == 'q':
+                        self.notify("The game was stopped by the user.")
+                        print("Thanks for playing!")
+                        exit()
+                    col = int(col_input) - 1
+                    if col not in range(3):
+                        print("Invalid col number! Please enter a number between 1 and 3.")
+                        continue
+                    else:
+                        has_col = True
+                #error if NaN
+                except ValueError: 
+                    print("Invalid input! Please enter numbers only.")
+                    continue
+
+            #checking if empty
+            if board[row][col] == ' ':
+                board[row][col] = mark
+                move_done = True
+                self.notify(f"Player {mark} placed his mark on row {row + 1}, column {col + 1}")
+            else:
+                has_col = False
+                has_row = False
+                print("Invalid move! There's already a mark in the specified position!")
+                continue
+
+
+
+game = Game()
+game_logger = Logger()
+game_console = Console()
+game.add_observer(game_logger) 
+game.add_observer(game_console)
+game.play()
+>>>>>>> parent of 44a0260 (infinity loop for game)
+while True:
+    game.play()
+    game.reset_board()
+    cont = input(("Do you want to play a new game? Press y for yes or n for no.").strip())
+    while (cont != 'n' and cont != 'y'):
+        print("Wrong character! Entry only n or y!")
+        print()
+        cont = input(("Press y for yes or n for no. ").strip())
+    if(cont == 'n'):
+        break
+    else:
+        continue
+   

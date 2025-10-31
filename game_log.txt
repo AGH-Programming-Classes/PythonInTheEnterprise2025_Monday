@@ -11,6 +11,7 @@ X has won the game!
 Game over.
 New game started
 The game was stopped by the user.
+<<<<<<< HEAD
 New game started
 Player O placed his mark on row 1, column 1
 Player X placed his mark on row 2, column 2
@@ -52,3 +53,5 @@ Game over.
 New game started
 The game was stopped by the user.
 >>>>>>> 44a02603a624c7ef361688d0e2e4524a9093ffdb
+=======
+>>>>>>> parent of 44a0260 (infinity loop for game)
